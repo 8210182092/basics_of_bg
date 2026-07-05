@@ -3,66 +3,287 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>भगवद्गीता यथारूप क्विज़ - डैशबोर्ड</title>
+  <title>Basics of Bhagavad Gita - KBC Dashboard</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Calibri,'Segoe UI',sans-serif}
-    body{min-height:100vh;color:#fff;background:radial-gradient(circle at 50% 0,#18215c 0,#07091e 48%,#02030d 100%);overflow-x:hidden;padding:24px}
-    body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 15%,rgba(255,204,0,.16),transparent 28%),radial-gradient(circle at 80% 20%,rgba(0,210,255,.16),transparent 26%);pointer-events:none}
-    header{text-align:center;margin:0 auto 26px;position:relative;z-index:2}
-    h1{font-size:clamp(1.8rem,5vw,4.2rem);line-height:1.35;padding:.08em 0;background:linear-gradient(90deg,#fff,#ffcc33,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 34px rgba(0,210,255,.5);overflow-wrap:anywhere}
-    header p{font-size:clamp(1rem,2vw,1.35rem);color:#cbd7ff;margin-top:8px}
-    .book-wrap{max-width:1180px;margin:0 auto 34px;perspective:1800px;position:relative;z-index:2}
-    .book{display:grid;grid-template-columns:1fr 1fr;min-height:340px;border-radius:10px;filter:drop-shadow(0 28px 40px rgba(0,0,0,.55));animation:bookOpen 1.2s ease both}
-    .page{position:relative;padding:28px;border:2px solid rgba(120,70,20,.7);background:linear-gradient(90deg,#f7e6b6,#fff4cf 12%,#f4da9a 100%);color:#251607;box-shadow:inset 0 0 28px rgba(88,47,10,.2)}
-    .page.left{border-radius:12px 0 0 12px;transform-origin:right center}
-    .page.right{border-radius:0 12px 12px 0;transform-origin:left center}
-    .page.left:after,.page.right:before{content:"";position:absolute;top:0;bottom:0;width:26px;background:linear-gradient(90deg,rgba(70,30,0,.22),transparent)}
-    .page.left:after{right:0}.page.right:before{left:0;transform:scaleX(-1)}
-    .book-title{font-size:clamp(1.45rem,3vw,2.4rem);line-height:1.28;color:#5c2704;text-align:center;margin-bottom:12px}
-    .poster{width:100%;height:220px;object-fit:cover;border:4px solid #8a4c11;border-radius:8px;box-shadow:0 12px 24px rgba(50,20,0,.35)}
-    .score-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
-    .score-tile{background:rgba(94,45,5,.12);border:1px solid rgba(94,45,5,.35);border-radius:8px;padding:13px;text-align:center}
-    .score-tile strong{display:block;font-size:1.55rem;color:#8a3300}.score-tile span{font-weight:700;font-size:.9rem}
-    .chapters-container{max-width:1380px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:22px;position:relative;z-index:2}
-    .chapter-card{background:linear-gradient(135deg,rgba(6,12,42,.94),rgba(12,26,77,.94));border:2px solid rgba(0,210,255,.75);border-radius:8px;padding:18px;box-shadow:0 0 20px rgba(0,210,255,.18);transition:.25s;overflow:hidden}
-    .chapter-card:hover{transform:translateY(-5px);border-color:#ffcc00;box-shadow:0 0 30px rgba(255,204,0,.32)}
-    .chapter-title{color:#ffcc33;font-size:1.15rem;font-weight:800;line-height:1.35;padding-bottom:12px;border-bottom:1px solid rgba(0,210,255,.35);margin-bottom:14px}
-    .parts-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-    .part-link{position:relative;min-height:84px;text-decoration:none;color:#fff;background:rgba(0,210,255,.1);border:1px solid #00d2ff;border-radius:8px;padding:9px 5px;text-align:center;font-weight:800;display:flex;flex-direction:column;justify-content:center;gap:4px;transition:.22s}
-    .part-link:hover{background:#ffcc00;color:#081035;border-color:#ffcc00;box-shadow:0 0 14px #ffcc00}
-    .part-link.completed{background:linear-gradient(135deg,#087236,#00bf68);border-color:#42ff9d;box-shadow:0 0 16px rgba(66,255,157,.35)}
-    .part-score{font-size:.72rem;font-weight:700;line-height:1.18;opacity:.92}
-    .reset-btn{margin:22px auto 0;display:block;padding:12px 22px;border-radius:999px;border:2px solid #ffcc00;background:#07103b;color:#ffcc00;font-weight:800;cursor:pointer}
-    .reset-btn:hover{background:#ffcc00;color:#07103b}
-    @keyframes bookOpen{0%{opacity:0;transform:rotateX(12deg) scale(.92)}100%{opacity:1;transform:rotateX(0) scale(1)}}
-    @media(max-width:760px){body{padding:14px}.book{grid-template-columns:1fr}.page{border-radius:10px!important}.poster{height:180px}.score-summary{grid-template-columns:repeat(2,1fr)}.chapters-container{grid-template-columns:1fr}.parts-grid{grid-template-columns:repeat(5,minmax(54px,1fr))}.part-link{min-height:72px;font-size:.85rem}}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      color: #fff;
+      background: radial-gradient(circle at 50% 50%, #101642 0%, #05071a 60%, #010207 100%);
+      overflow-x: hidden;
+      padding: 30px 20px;
+    }
+    /* KBC Cosmic BG Elements */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(0, 210, 255, 0.2), transparent 35%),
+        radial-gradient(circle at 85% 80%, rgba(255, 204, 0, 0.15), transparent 40%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    h1 {
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      line-height: 1.2;
+      background: linear-gradient(180deg, #fff 20%, #ffcc00 60%, #ff9900 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.6));
+    }
+    header p {
+      font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+      color: #00d2ff;
+      margin-top: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(0, 210, 255, 0.4);
+    }
+
+    /* KBC Central Scoreboard Display */
+    .book-wrap {
+      max-width: 1000px;
+      margin: 0 auto 45px;
+      position: relative;
+      z-index: 2;
+    }
+    .kbc-display {
+      background: linear-gradient(145deg, #0a1136, #030617);
+      border: 3px solid #ffcc00;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 204, 0, 0.25), inset 0 0 20px rgba(0, 210, 255, 0.15);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      overflow: hidden;
+    }
+    .display-panel {
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .display-panel.left {
+      border-right: 2px dashed rgba(255, 204, 0, 0.3);
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .book-title {
+      font-size: 1.8rem;
+      color: #ffcc00;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 800;
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+    }
+    .poster {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      border: 3px solid #00d2ff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+    }
+
+    .score-summary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .score-tile {
+      background: linear-gradient(135deg, rgba(0, 210, 255, 0.05), rgba(0, 210, 255, 0.15));
+      border: 1.5px solid #00d2ff;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.1);
+    }
+    .score-tile strong {
+      display: block;
+      font-size: 1.8rem;
+      color: #ffcc00;
+      font-weight: 800;
+      text-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+    }
+    .score-tile span {
+      font-size: 0.85rem;
+      color: #cbd7ff;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .reset-btn {
+      padding: 12px 30px;
+      border-radius: 30px;
+      border: 2px solid #ff4444;
+      background: transparent;
+      color: #ff4444;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .reset-btn:hover {
+      background: #ff4444;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* KBC Grid System */
+    .chapters-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      z-index: 2;
+    }
+    .chapter-card {
+      background: linear-gradient(90deg, rgba(12, 22, 69, 0.95) 0%, rgba(5, 9, 36, 0.95) 100%);
+      border: 2px solid #00d2ff;
+      border-radius: 40px; /* Pointy diamond side vibe */
+      padding: 15px 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 210, 255, 0.1);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .chapter-card:hover {
+      border-color: #ffcc00;
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+      transform: scale(1.01);
+    }
+    
+    .chapter-info {
+      flex: 1;
+    }
+    .chapter-title {
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .question-count-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: #ffcc00;
+      background: rgba(255, 204, 0, 0.1);
+      border: 1px solid rgba(255, 204, 0, 0.4);
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    /* KBC Diamond Locked/Active Play Button Buttons */
+    .part-link {
+      text-decoration: none;
+      color: #ffcc00;
+      background: linear-gradient(90deg, #121e52 0%, #1b2e7a 100%);
+      border: 2px solid #ffcc00;
+      border-radius: 10px;
+      padding: 12px 25px;
+      min-width: 170px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+      transition: all 0.25s ease;
+    }
+    .part-link:hover {
+      background: linear-gradient(90deg, #ffcc00 0%, #ff9900 100%);
+      color: #030617;
+      box-shadow: 0 0 20px #ffcc00;
+      transform: translateY(-2px);
+    }
+    .part-link.completed {
+      background: linear-gradient(90deg, #054020 0%, #0b7a3e 100%);
+      border-color: #00ff77;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(0, 255, 119, 0.3);
+    }
+    .part-score {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #00d2ff;
+    }
+    .part-link.completed .part-score {
+      color: #ffcc00;
+    }
+
+    /* Responsive scaling */
+    @media (max-width: 768px) {
+      body { padding: 15px 10px; }
+      .kbc-display { grid-template-columns: 1fr; }
+      .display-panel.left { border-right: none; border-bottom: 2px dashed rgba(255, 204, 0, 0.3); padding: 25px; }
+      .display-panel.right { padding: 25px; }
+      .chapter-card {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        border-radius: 20px;
+        padding: 20px;
+      }
+      .part-link { width: 100%; }
+    }
   </style>
 </head>
 <body>
+
   <audio id="dashboard-theme" autoplay loop preload="auto">
     <source src="SP_Bhajans_04_-_Hare_Krsna_Maha_Mantra.mp3" type="audio/mpeg">
   </audio>
 
   <header>
-    <h1>Śrīmad Bhagavad-gītā As It Is Quiz</h1>
-    <p>Jñāna Yajña Mahāabhiyān — 18 Chapters, 90 Parts, 10 Questions in Each Part</p>
+    <h1>Basics of Bhagavad Gita</h1>
+    <p>महाक्विज अभियान — 7 अध्याय, अद्भुत प्रश्नोत्तरी</p>
   </header>
 
   <section class="book-wrap">
-    <div class="book">
-      <div class="page left">
-        <h2 class="book-title">Śrīmad Bhagavad-gītā As It Is</h2>
-        <img src="123456.avif" alt="गीता पोस्टर" class="poster" onerror="this.src='https://placehold.co/700x420?text=Bhagavad+Gita'">
+    <div class="kbc-display">
+      <div class="display-panel left">
+        <h2 class="book-title">श्रीमद्भगवद्गीता ज्ञान</h2>
+        <img src="Gemini_Generated_Image_sjhv7nsjhv7nsjhv.png" alt="गीता पोस्टर" class="poster" onerror="this.src='https://placehold.co/700x420?text=Bhagavad+Gita'">
       </div>
-      <div class="page right">
-        <h2 class="book-title">Your Scoreboard</h2>
+      <div class="display-panel right">
+        <h2 class="book-title">आपका स्कोरबोर्ड</h2>
         <div class="score-summary">
-          <div class="score-tile"><strong id="total-played">0</strong><span>Played Parts</span></div>
-          <div class="score-tile"><strong id="total-correct">0/0</strong><span>Correct Answers</span></div>
-          <div class="score-tile"><strong id="total-wrong">0</strong><span>Incorrect Answers</span></div>
-          <div class="score-tile"><strong id="total-score">0</strong><span>Total Score</span></div>
+          <div class="score-tile"><strong id="total-played">0</strong><span>पूर्ण अध्याय</span></div>
+          <div class="score-tile"><strong id="total-correct">0/0</strong><span>सही उत्तर</span></div>
+          <div class="score-tile"><strong id="total-wrong">0</strong><span>गलत उत्तर</span></div>
+          <div class="score-tile"><strong id="total-score">0</strong><span>कुल अंक</span></div>
         </div>
-        <button class="reset-btn" onclick="resetScores()">Reset Score</button>
+        <button class="reset-btn" onclick="resetScores()">स्कोर रीसेट करें</button>
       </div>
     </div>
   </section>
@@ -71,52 +292,33 @@
 
   <script>
     const gitaChapters = [
-  "Observing the Armies on the Battlefield of Kurukṣetra (Chapter 1)",
-  "Contents of the Gita Summarized (Chapter 2)",
-  "Karma-yoga (Chapter 3)",
-  "Transcendental Knowledge (Chapter 4)",
-  "Karma-yoga — Action in Kṛṣṇa Consciousness (Chapter 5)",
-  "Dhyāna-yoga (Chapter 6)",
-  "Knowledge of the Absolute (Chapter 7)",
-  "Attaining the Supreme (Chapter 8)",
-  "The Most Confidential Knowledge (Chapter 9)",
-  "The Opulence of the Absolute (Chapter 10)",
-  "The Universal Form (Chapter 11)",
-  "Devotional Service (Chapter 12)",
-  "Nature, the Enjoyer and Consciousness (Chapter 13)",
-  "The Three Modes of Material Nature (Chapter 14)",
-  "The Yoga of the Supreme Person (Chapter 15)",
-  "The Divine and Demoniac Natures (Chapter 16)",
-  "The Divisions of Faith (Chapter 17)",
-  "Conclusion — The Perfection of Renunciation (Chapter 18)"
-];
+      { name: "Chapter 1 - Introduction", questions: 30 },
+      { name: "Chapter 2 - Sri Bhagavan (The Existence and Nature of God)", questions: 40 },
+      { name: "Chapter 3 - The Soul (Who Am I?)", questions: 40 },
+      { name: "Chapter 4 - The Cycle of Life and the Laws of Karma", questions: 40 },
+      { name: "Chapter 5 - Material Nature and Time", questions: 40 },
+      { name: "Chapter 6 - Different Types of Yoga and the Supreme Yoga System", questions: 40 },
+      { name: "Chapter 7 - Practical Application of the Bhagavad Gita", questions: 40 }
+    ];
 
     function getProgress() {
       try {
-        return JSON.parse(localStorage.getItem("gita_quiz_progress")) || {};
+        return JSON.parse(localStorage.getItem("gita_quiz_progress_v2")) || {};
       } catch (e) {
         return {};
       }
     }
 
-    function partHref(ch, part) {
-      if (ch === 1 && part === 1) return "main_full.html";
-      return `gemini_code_ch${ch}_p${part}.html`;
+    function partHref(ch) {
+      return `index108.html?chapter=${ch}`;
     }
 
-    function normalizePartData(data) {
+    function normalizeChapterData(data, totalQuestions) {
       if (!data) return null;
-
-      if (typeof data === "number") {
-        return { correct: data, incorrect: 0, total: 10, score: data };
-      }
-
       const correct = Number(data.correct || 0);
       const incorrect = Number(data.incorrect || 0);
-      const total = Number(data.total || 10);
       const score = Number(data.score !== undefined ? data.score : Math.max(0, correct - incorrect));
-
-      return { correct, incorrect, total, score };
+      return { correct, incorrect, total: totalQuestions, score };
     }
 
     function renderDashboard() {
@@ -128,50 +330,62 @@
       let totalCorrect = 0;
       let totalWrong = 0;
       let totalScore = 0;
-      let totalQuestions = 0;
+      let totalQuestionsSum = 0;
 
-      gitaChapters.forEach((name, index) => {
-        const ch = index + 1;
+      gitaChapters.forEach((chData, index) => {
+        const chNum = index + 1;
+        const key = `ch_${chNum}`;
+        const data = normalizeChapterData(progress[key], chData.questions);
+        
         const card = document.createElement("section");
         card.className = "chapter-card";
-        card.innerHTML = `<div class="chapter-title">${name}</div><div class="parts-grid"></div>`;
 
-        const grid = card.querySelector(".parts-grid");
+        // Info Block
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "chapter-info";
+        infoDiv.innerHTML = `
+          <div class="chapter-title">${chData.name}</div>
+          <div class="question-count-tag">${chData.questions} Questions</div>
+        `;
 
-        for (let part = 1; part <= 5; part++) {
-          const key = `ch_${ch}_p_${part}`;
-          const data = normalizePartData(progress[key]);
-          const link = document.createElement("a");
-
-          link.href = partHref(ch, part);
-          link.className = "part-link" + (data ? " completed" : "");
-          link.innerHTML = data
-            ? `<span>Part ${part}</span><span class="part-score">Correct ${data.correct}/${data.total}<br>Wrong ${data.incorrect}<br>Score ${data.score}</span>`
-            : `<span>Part ${part}</span><span class="part-score">Let's Start</span>`;
-
-          if (data) {
-            totalPlayed++;
-            totalCorrect += data.correct;
-            totalWrong += data.incorrect;
-            totalScore += data.score;
-            totalQuestions += data.total;
-          }
-
-          grid.appendChild(link);
+        // Interactive Button Block
+        const link = document.createElement("a");
+        link.href = partHref(chNum);
+        
+        if (data) {
+          link.className = "part-link completed";
+          link.innerHTML = `
+            <span>खेला गया</span>
+            <span class="part-score">सही: ${data.correct}/${data.total} | अंक: ${data.score}</span>
+          `;
+          totalPlayed++;
+          totalCorrect += data.correct;
+          totalWrong += data.incorrect;
+          totalScore += data.score;
+          totalQuestionsSum += data.total;
+        } else {
+          link.className = "part-link";
+          link.innerHTML = `
+            <span>क्विज शुरू करें</span>
+            <span class="part-score">Let's Play</span>
+          `;
         }
 
+        card.appendChild(infoDiv);
+        card.appendChild(link);
         container.appendChild(card);
       });
 
-      document.getElementById("total-played").textContent = totalPlayed;
-      document.getElementById("total-correct").textContent = `${totalCorrect}/${totalQuestions}`;
+      // Update Top Status Panels
+      document.getElementById("total-played").textContent = `${totalPlayed} / 7`;
+      document.getElementById("total-correct").textContent = `${totalCorrect}/${totalQuestionsSum || 270}`;
       document.getElementById("total-wrong").textContent = totalWrong;
       document.getElementById("total-score").textContent = totalScore;
     }
 
     function resetScores() {
       if (confirm("क्या आप सभी scores reset करना चाहते हैं?")) {
-        localStorage.removeItem("gita_quiz_progress");
+        localStorage.removeItem("gita_quiz_progress_v2");
         localStorage.removeItem("last_played_quiz_score");
         renderDashboard();
       }
@@ -179,7 +393,6 @@
 
     window.addEventListener("load", () => {
       renderDashboard();
-
       document.body.addEventListener("click", () => {
         const audio = document.getElementById("dashboard-theme");
         if (audio && audio.paused) audio.play().catch(() => {});
